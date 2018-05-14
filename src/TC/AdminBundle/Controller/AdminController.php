@@ -169,7 +169,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCUserBundle:User')
       ->research($value['value'])
       ;
-		 var_dump($value["value"]);
+		
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -217,7 +217,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCUserBundle:Groups')
       ->research($value['value'])
       ;
-         var_dump($value["value"]);
+        
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $groupes, /* query NOT result */
@@ -274,7 +274,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:News')
       ->research($value['value'])
       ;
-         var_dump($value["value"]);
+        
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -330,7 +330,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:News')
       ->researchFiltred($jeux, $value['value'])
       ;
-         var_dump($value["value"]);
+        
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -386,7 +386,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:Articles')
       ->research($value['value'])
       ;
-         var_dump($value["value"]);
+         
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -442,7 +442,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:Articles')
       ->researchFiltred($jeux, $value['value'])
       ;
-         var_dump($value["value"]);
+        
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -498,7 +498,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:Guides')
       ->research($value['value'])
       ;
-         var_dump($value["value"]);
+         
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -554,7 +554,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:Guides')
       ->researchFiltred($jeux, $value['value'])
       ;
-         var_dump($value["value"]);
+        
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -610,7 +610,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:Games')
       ->research($value['value'])
       ;
-         var_dump($value["value"]);
+         
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
@@ -697,7 +697,7 @@ $area->getOptions()->setHeight(350);
       ->getRepository('TCWriterBundle:Tag')
       ->research($value['value'])
       ;
-         var_dump($value["value"]);
+         
          $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
         $useres, /* query NOT result */
