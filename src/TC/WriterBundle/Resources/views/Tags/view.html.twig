@@ -1,0 +1,208 @@
+{% extends "TCMainBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - news {% endblock %}
+
+{% block body %}
+{% if tagnews is not empty %}
+    <div class="row">
+      <div class="heading_big_picture2 col-md-12 col-lg-12">Dernières news sur {{ tag }} <span class="size_icon glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div></div>
+        <div class="row">
+                    
+          <div class="list col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+           
+            <!--DESKTOP VIEW -->
+            <div class="row">
+            <div class="row largest_div">
+              {% for news in tagnews %}
+               <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ news.miniatureUrl }} " alt="{{ news.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'">
+              <h1>{{ news.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endfor %}
+            </div>
+            <!-- MOBILE VIEW -->
+            {% for news in tagnews %}
+             <div class="mobile div col-xs-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ news.miniatureUrl }} " alt="{{ news.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'">
+              <h1>{{ news.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+            {% endfor %}
+          
+            <!-- END MOBILE div  -->
+            
+            <div class="row">
+              <div class="footer_latest col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 col-lg-12">
+                  <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path('tc_writer_news_filtred', {'tag': tag| replace({' ': '_'})}) }}'">Toutes nos news sur {{ tag }}<span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+            </div>
+            {% endif %}
+      
+            {% if tagarticles is not empty %}
+            <!-- DESKTOP VIEW -->
+            <div class="row">
+      <div class="heading_big_picture2 col-md-12 col-lg-12">Dernier articles  sur {{ tag }}  <span class="size_icon glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div></div>
+            <div class="row">
+            <div class="row largest_div hidden-sm hidden-md hidden-xs">
+              {% for articles in tagarticles %}
+              {% if loop.first %}
+              <div class="div col-xs-6 col-sm-12 col-md-12 col-lg-12 ">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+                    <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive divimg" />
+                  </div>
+                  <div class="col-sm-6 col-md-8 col-lg-6 unlock ">
+                    <h1>{{ articles.title }}</h1>
+                    <h2>{{ articles.game.title }}</h2>
+                    <p>{{ articles.content|striptags()|raw|nl2br() }}</p>
+                    <button class="btn gameindex_button" onclick="window.location.href='{{ path('tc_writer_jeux_view', {'jeux': articles.game.title| replace({' ': '_'})}) }}'">Fiche du jeu</button>
+                    <button class="btn read_button btn-color-articles" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">Lire l'articles</button>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+                <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">
+              <h1>{{ articles.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+
+            <div class="row largest_div hidden-lg">
+              {% for articles in tagarticles %}
+               <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">
+              <h1>{{ articles.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endfor %}
+            </div>
+
+            <!-- MOBILE div  -->
+            {% for articles in tagarticles %}
+              <div class="mobile div col-xs-12">
+            <div class="col-xs-12">
+              <div class="row">
+                <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">
+              <h1>{{ articles.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+            {% endfor %}
+            <!-- END MOBILE div  -->
+            <div class="row">
+              <div class="footer_latest col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 col-lg-12">
+                  <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path('tc_writer_articles_filtred', {'tag': tag| replace({' ': '_'})}) }}'">Tous nos articles sur {{ tag }}<span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+            
+            {% if tagguides is not empty %}
+            <div class="row">
+      <div class="heading_big_picture2 col-md-12 col-lg-12">Dernier guides  sur {{ tag }}  <span class="size_icon glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div></div>
+            <div class="row">
+            <div class="row largest_div hidden-xs hidden-sm hidden-md">
+              {% for guides in tagguides %}
+             {% if loop.first %}
+              <div class="div hidden-xs col-sm-12 col-md-12 col-lg-12 ">
+                <div class="row">
+                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-6">
+                    <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive divimg" />
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-8 col-lg-6 unlock">
+                    <h1>{{ guides.title }}</h1>
+                    <h2>{{ guides.game.title }}</h2>
+                    <h2>{{ guides.category.title }}</h2>
+                    <p>{{ guides.content|striptags()|raw|nl2br() }}</p>
+                    <button class="btn gameindex_button" onclick="window.location.href='{{ path('tc_writer_jeux_view', {'jeux': guides.game.title| replace({' ': '_'})}) }}'">Fiche du jeu</button>
+                    <button class="btn read_button" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">Lire la guides</button>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+                 <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">
+              <h1>{{ guides.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endif %}
+              {% endfor %}
+          </div>
+
+          <div class="row largest_div hidden-lg">
+              {% for guides in tagguides %}
+               <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">
+              <h1>{{ guides.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endfor %}
+            </div>
+
+            <!-- MOBILE div  -->
+            {% for guides in tagguides %}
+            <div class="mobile div col-xs-12">
+            <div class="col-xs-12 ">
+              <div class="row">
+                <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">
+              <h1>{{ guides.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+            {% endfor %}
+            <!-- END MOBILE div  -->
+            <div class="row">
+              <div class="footer_latest col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 float_right col-lg-6">
+                  <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path('tc_writer_guides_filtred', {'tag': tag| replace({' ': '_'})}) }}'">tous nos guides sur {{ tag }}<span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+        <!-- endtabs -->
+    </div>
+    {% endif %}
+
+{% endblock %}

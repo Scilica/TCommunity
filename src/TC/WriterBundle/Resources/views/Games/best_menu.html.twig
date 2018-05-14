@@ -1,0 +1,30 @@
+<div class="best_game_box">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="heading_widget col-lg-12">Jeux du moment</div>                       
+      {% for game in bestGameslist %}
+      <div class="game_div col-lg-12">
+        <div class="row">
+          <div class="col-lg-5">
+            <img src="{{ game.jaquetteUrl }}" alt="{{ game.jaquetteAlt }}" class="img-responsive divimg" />
+          </div>
+          <div class="col-lg-7 game_content_div">
+            <div class="row">
+              <div class="col-lg-12 game_content_title">
+                <h1>{{ game.title }}</h1>
+                <h2>{{ game.editor }}</h2>
+                <h3>{{ game.plateform }}</h3>
+              </div>
+            </div>
+            <div class="col-lg-12 game_content_div_button">
+              <div class="row">
+                <button class="btn gameindex_button_blue" onclick="window.location.href='{{ path('tc_writer_jeux_view', {'jeux': game.title| replace({' ': '_'})}) }}'" >Fiche du jeu</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

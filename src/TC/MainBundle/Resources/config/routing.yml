@@ -1,0 +1,3 @@
+tc_main_homepage:
+    path:     /
+    defaults: { _controller: TCMainBundle:Home:index }

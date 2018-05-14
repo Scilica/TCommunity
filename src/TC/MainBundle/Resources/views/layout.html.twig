@@ -1,0 +1,99 @@
+{# src/TC/MainBundle/Ressources/view/layout.html.twig #}
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>{% block title %}Tears Community{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block stylesheets %}
+	<link href="{{ asset('css/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main_design.css') }}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  	{% endblock %}
+  </head>
+
+  <body>
+<header>
+<div class="container-fluid blackheader expand">
+  <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><a href="{{ path('tc_main_homepage') }}"><img class="img-responsive logo" src="{{ asset('logo.png') }}"/></a></div>
+          <div class="hidden-sm hidden-xs blockspace"></div>
+                      <!-- DEBUT NAVBAR -->
+          {{ render(controller("TCMainBundle:Core:menu")) }}
+										<!-- FIN NAVBAR -->
+      </div>
+  </div>
+</div>
+                  						<!-- DEBUT NAVTABS -->
+<div class="container-fluid greyheader">
+  <div class="container">
+    <div class="row">
+      <ul class="hidden-xs col-sm-12 col-md-5 col-lg-5 nav navtabs">
+        <li class="col-sm-4 col-md-4 col-lg-4"><a href="{{ path('tc_writer_news_homepage') }}">News</a></li>
+        <li class="col-sm-4 col-md-4 col-lg-4"><a href="{{ path('tc_writer_articles_homepage') }}">Articles</a></li>
+        <li class="col-sm-4 col-md-4 col-lg-4"><a href="{{ path('tc_writer_guides_homepage') }}">Guides</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+                  						<!-- FIN NAVTABS -->
+</header>
+
+<section>
+  <div class="container wrapper"> 
+{% block body %}
+
+{% endblock %}
+</section>
+  </div> 
+<footer>
+  <div class="container-fluid divsocial-network">
+    <div class="container social-network">
+      <div class="row">
+        <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3 col-sm-offset-8 col-md-offset-8 col-lg-offset-8" id="social_network">
+          <a class="social1" href='ourfluxrss' target='_blank' title='Suivez {{ website }} en RSS'></a>
+          <a class="social2" href='http://twitter.com' target='_blank' title='Suivez {{ website }} sur Twitter'></a>
+          <a class="social3" href='http://youtube.com' target='_blank' title='Suivez {{ website }} sur Youtube'></a>
+          <a class="social4" href='http://facebook.com' target='_blank' title='Suivez {{ website }} sur Facebook'></a>        
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <span><p class="text-center copyright"> (#Build_Alpha_3.8) - {{ website }} - Tous droits réservés</p></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% block javascripts %}
+	<script src="{{ asset('css/bootstrap/js/jquery.js') }}"></script>
+    <script src="{{ asset('css/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('css/bootstrap/js/ckeditor-responsive-images.js') }}"></script>
+    <script>
+		$(function() {
+			// Affichage du sous menu en douceur
+			jQuery('ul.nav li.dropdown').hover(function() {
+			  jQuery(this).find('.jqueryFadeIn').stop(true, true).delay(200).fadeIn();
+			}, function() {
+			  jQuery(this).find('.jqueryFadeIn').stop(true, true).delay(200).fadeOut();
+			});
+		});
+	</script>
+{% block addon_script %}
+
+{% endblock %}
+{% endblock %}
+  </body>
+</html>

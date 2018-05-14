@@ -1,0 +1,13 @@
+{% extends "TCMainBundle::layout_backoffice.html.twig" %}
+
+{% block title %} {{ parent() }} - news {% endblock %}
+
+{% block body %}
+
+<h3> Formulaire d'ajout de news </h3>
+
+<div>
+	{{ form(form) }}
+</div>
+
+{% endblock %}

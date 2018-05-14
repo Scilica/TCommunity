@@ -1,0 +1,4 @@
+services:
+#    tc_admin.example:
+#        class: TC\AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -1,0 +1,118 @@
+<nav class="col-xs-12 col-sm-12 col-md-offset-1 col-md-7 col-lg-offset-1 col-lg-6 navbar navbar-default">
+  		      <div class="navbar-header">
+			       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-menu">
+				      <span class="sr-only">Toggle navigation</span>
+				      <span class="icon-bar"></span>
+				      <span class="icon-bar"></span>
+				      <span class="icon-bar"></span>
+			       </button>
+			       <a class="navbar-brand  hidden-md hidden-lg" href="#">Menu</a>
+		        </div>
+		        <div class="collapse navbar-collapse" id="main-menu" style="margin-bottom: 0px;">
+  			     <ul class="nav navbar-nav">
+  				    <li class="hidden-xs hidden-sm"><a href="{{ path('tc_main_homepage') }}">Accueil</a></li>
+  				    <li class="dropdown hidden-xs hidden-sm">
+  					   <a data-toggle="dropdown" href="#">Nos Jeux</a>
+  						  <ul class="dropdown-menu jqueryFadeIn">
+  						  	{% for games in listGames %}
+  							 <li><a href="{{ path('tc_writer_jeux_view', {'jeux': games.title|replace({' ': '_'})}) }} ">
+  							 	{{ games.title }}
+  							 	</a>
+  							 </li>
+  							{% endfor %}
+						  </ul>
+  				    </li>
+  				    <li class="dropdown hidden-xs hidden-sm">
+  					   <a data-toggle="dropdown" href="#">Medias</a>
+  						  <ul class="dropdown-menu jqueryFadeIn">
+  							 <li class="disabled"><a href="#">Galerie</a></li>
+							   <li class="disabled"><a href="#">Vidéos</a></li>
+							   <li class="disabled"><a href="#">Chaines Youtube</a></li>
+						    </ul>
+  				    </li>
+  				    <li class="dropdown hidden-xs hidden-sm">
+  					   <a data-toggle="dropdown" href="#">About</a>
+  						  <ul class="dropdown-menu  jqueryFadeIn">
+  							 <li><a href="#">Rapport de bug</a></li>
+							   <li><a href="#">Suivre le developpement</a></li>
+							   <li><a href="#">Newsletter</a></li>
+							   <li><a href="#">Information légales</a></li>
+							   <li><a href="#">L'équipe</a></li>
+							   <li><a href="#">Contact</a></li>
+						    </ul>
+  				    </li>
+              <li class="dropdown hidden-xs hidden-sm">
+               <a data-toggle="dropdown" href="#">Mon Compte</a>
+                <ul class="dropdown-menu  jqueryFadeIn">
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <li><a href="{{ path('fos_user_profile_show') }}">Tableau de bord</a></li>
+                  <li><a href="{{ path('fos_message_inbox') }}">Boite de réception ({{ fos_message_nb_unread() }})</a></li>
+                  <li><a href="{{ path('fos_user_profile_edit') }}">Mes paramètres</a></li>
+                  <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                  {% else %}
+                 <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                 <li><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
+                 {% endif %}
+                 {% if is_granted('ROLE_ADMIN') %}
+                 <li class="divider"></li> 
+                 <li><a href="{{ path('tc_admin_homepage') }}">Back Office</a></li>
+                 {% endif %}
+                </ul>
+              </li>
+
+  										<!-- TELEPHONE -->
+  				    <li class="hidden-md hidden-lg"><a href="{{ path('tc_main_homepage') }}">Accueil</a></li>
+  				    <li class="dropdown hidden-md hidden-lg">
+  					   <a data-toggle="dropdown" href="#">Nos Jeux <span class="caret"></span></a>
+  						  <ul class="dropdown-menu">
+  							 {% for games in listGames %}
+  							 <li><a href="{{ path('tc_writer_jeux_view', {'jeux': games.title| replace({' ': '_'})}) }} ">
+  							 	{{ games.title }}
+  							 	</a>
+  							 </li>
+  							 {% endfor %}
+						    </ul>
+  				    </li>
+  				    <li class="dropdown hidden-md hidden-lg">
+  					   <a data-toggle="dropdown" href="#">Medias <span class="caret"></span></a>
+  						  <ul class="dropdown-menu">
+  							 <li class="disabled"><a href="#">Galerie</a></li>
+                 <li class="disabled"><a href="#">Vidéos</a></li>
+                 <li class="disabled"><a href="#">Chaines Youtube</a></li>
+						    </ul>
+  				    </li>
+  				    <li class="dropdown hidden-md hidden-lg">
+  					   <a data-toggle="dropdown" href="#">About <span class="caret"></span></a>
+  						  <ul class="dropdown-menu">
+  							 <li><a href="#">Rapport de bug</a></li>
+                 <li><a href="#">Suivre le developpement</a></li>
+                 <li><a href="#">Newsletter</a></li>
+                 <li><a href="#">Information légales</a></li>
+                 <li><a href="#">L'équipe</a></li>
+                 <li><a href="#">Contact</a></li>
+						    </ul>
+  				    </li>
+              
+              <div class="hidden-lg hidden-md blockspace_mtel"></div>
+
+              <li class="dropdown hidden-md hidden-lg">
+                <a data-toggle="dropdown" href="#">Mon Compte <span class="caret"></span></a>
+                  <ul class="dropdown-menu block">
+                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <li><a href="{{ path('fos_user_profile_show') }}">Tableau de bord</a></li>
+                  <li><a href="{{ path('fos_message_inbox') }}">Boite de réception ({{ fos_message_nb_unread() }})</a></li>
+                  <li><a href="{{ path('fos_user_profile_edit') }}">Mes paramètres</a></li>
+                  <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                  {% else %}
+                 <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                 <li><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
+                 {% endif %}
+                 {% if is_granted('ROLE_ADMIN') %}
+                 <li class="divider"></li> 
+                 <li><a href="{{ path('tc_admin_homepage') }}">Back Office</a></li>
+                 {% endif %}
+                  </ul>
+              </li>
+             </ul>
+            </div>
+          </nav>

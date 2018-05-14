@@ -1,0 +1,498 @@
+{% extends "TCMainBundle::layout_backoffice.html.twig" %}
+
+{% block body %}
+
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <div class="header_primary">
+          <div class="row">
+            <div class="heading_span heading_big_picture2 col-md-12 col-lg-12" onclick="$("#accordion")" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Statistiques<span class="size_icon glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
+          </div>
+          <div class="row">
+            <div id="collapseOne" class="collapse in" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <div class="col-lg-12 bobox">
+                  <div class="row">
+                    <div class="tool_box hidden-sm hidden-xs col-md-4 col-lg-3">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Stats API</div>
+                      </div>
+                      <div class="row">
+                        <div class="conteneur123456">
+                          <div class="stattitle">Résultat des 30 derniers jours</div>
+                          <div class="col-lg-12 statconteneur">
+                            <div class="col-lg-12">
+                              <span class="bold">{{ sessions }}</span> sessions
+                            </div>
+                            <div class="col-lg-12">
+                              <span class="bold">{{ percentNewVisits }}</span> % de nouvelles visites
+                            </div>
+                            <div class="col-lg-12">
+                              <span class="bold">{{ bounceRate}}%</span> de rebond
+                            </div>
+                            <div class="col-lg-12">
+                              <span class="bold">{{ pageViews }}</span> pages consultées
+                            </div>
+                            <div class="col-lg-12">
+                              Moyenne de chargement: <span class="bold">{{ avgPageLoadTime }}s</span>
+                            </div>
+                          </div>
+
+                          <div class="stattitle">Publications </div>
+                          <div class="col-lg-12 statconteneur">
+                            <div class="col-lg-12">
+                              <span class="bold">{{ totalnews }}</span> news publiées sur le site
+                            </div>
+                            <div class="col-lg-12">
+                              <span class="bold">{{ totalarticles }}</span> articles publiés sur le site
+                           </div>
+                            <div class="col-lg-12">
+                              <span class="bold">{{ totalguides}}</span> guides publiés sur le site
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tool_box col-xs-12 col-sm-12 col-md-offset-1 col-md-7 col-lg-offset-1 col-lg-8">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Pages consultées ( 7 derniers jours )</div>
+                      </div>
+                      <div class="row">
+                        <div id="div_chart2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="footer_latest2 col-xs-12 col-lg-12">
+                  <div class="contain_button col-md-12 col-lg-12">
+                    <button class="btn allofthem_button float_right disabled" onclick="window.location.href='{{ path("tc_admin_homepage")}}'">
+                      Afficher les statistiques du site  <span class="size_icon glyphicon glyphicon-menu-right"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <div class="header_primary">
+          <div class="row">
+            <div class="heading_span heading_big_picture2 col-md-12 col-lg-12" onclick="$("#accordion")" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Publications en attente  <span class="size_icon glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div id="collapseTwo" class="collapse in" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                <div class="col-lg-12 bobox">
+                  <div class="row">
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">News non publiée(s)</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if unpublishednews is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucune news en attente de publication</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Auteur</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for news in unpublishednews %}
+                                  <tr>
+                                    <th>{{ news.id }}</th>
+                                    <th>{{ news.title }}</th>
+                                    <th>{{ news.game.title }}</th>
+                                    <th>{{ news.author }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_admin_writer_news_edit', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                      <a data-toggle="modal" data-target="#{{ news.id }}" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-trash"></span> Suppr</a>
+                                      <!-- MODAL -->
+                                        <div class="modal fade" id="{{ news.id }}" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title" id="deleteunpublishednews">Avertissement</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Êtes-vous certain de vouloir supprimer cette news :</br>
+                                                « {{ news.title }} »
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="button" class="btn btn-primary btn-danger" onclick="window.location.href='{{ path('tc_admin_writer_news_delete', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'"><span class="glyphicon glyphicon-trash"></span>  Supprimer</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <!-- END MODAL -->
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Article(s) non publié(s)</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if unpublishedarticles is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucun article en attente de publication</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Auteur</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for article in unpublishedarticles %}
+                                  <tr>
+                                    <th>{{ article.id }}</th>
+                                    <th>{{ article.title }}</th>
+                                    <th>{{ article.game.title }}</th>
+                                    <th>{{ article.author }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_admin_writer_articles_edit', {'jeux': article.game.title| replace({' ': '_'}) ,'id': article.id }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                      <a data-toggle="modal" data-target="#{{ article.id }}" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-trash"></span> Suppr</a>
+                                      <!-- MODAL -->
+                                        <div class="modal fade" id="{{ article.id }}" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title" id="deleteunpublishedarticle">Avertissement</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Êtes-vous certain de vouloir supprimer cet article :</br>
+                                                « {{ article.title }} »
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="button" class="btn btn-primary btn-danger" onclick="window.location.href='{{ path('tc_admin_writer_articles_delete', {'jeux': article.game.title| replace({' ': '_'}) ,'id': article.id }) }}'"><span class="glyphicon glyphicon-trash"></span>  Supprimer</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <!-- END MODAL -->
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Guide(s) non publié(s)</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if unpublishedguides is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucun guide en attente de publication</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Catégorie</th>
+                                  <th>Auteur</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for guide in unpublishedguides %}
+                                  <tr>
+                                    <th>{{ guide.id }}</th>
+                                    <th>{{ guide.title }}</th>
+                                    <th>{{ guide.game.title }}</th>
+                                    <th>{{ guide.category.title }}</th>
+                                    <th>{{ guide.author }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_admin_writer_guides_edit', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                      <a data-toggle="modal" data-target="#{{ guide.id }}" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-trash"></span> Suppr</a>
+                                      <!-- MODAL -->
+                                        <div class="modal fade" id="{{ guide.id }}" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title" id="deleteunpublishedguide">Avertissement</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Êtes-vous certain de vouloir supprimer ce guide :</br>
+                                                « {{ guide.title }} »
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="button" class="btn btn-primary btn-danger" onclick="window.location.href='{{ path('tc_admin_writer_guides_delete', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}'"><span class="glyphicon glyphicon-trash"></span>  Supprimer</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <!-- END MODAL -->
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <div class="header_primary">
+          <div class="row">
+            <div class="heading_span heading_big_picture2 col-md-12 col-lg-12" onclick="$("#accordion")" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Contenu du site  <span class="size_icon glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
+          </div>
+          <div class="row">
+            <div id="collapseThree" class="collapse in" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body">
+                <div class="col-lg-12 bobox">
+                  <div class="row">
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Jeux du moment</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if bestGameslist is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucun jeu du moment</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Titre</th>
+                                  <th>Editeur</th>
+                                  <th>Date de sortie</th>
+                                  <th>Plateforme</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for game in bestGameslist %}
+                                  <tr>
+                                    <th>{{ game.title }}</th>
+                                    <th>{{ game.editor }}</th>
+                                    <th>{{ game.date|date("d/m/Y") }}</th>
+                                    <th>{{ game.plateform|upper }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_admin_writer_jeux_view', {'jeux': game.title| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Détail</a>
+                                      <a href="{{ path('tc_writer_jeux_view', {'jeux': game.title| replace({' ': '_'})}) }}" class="btn btn-primary btn-voir"><span class="glyphicon glyphicon-file"></span> Voir</a>
+                                      <a href="{{ path('tc_admin_writer_jeux_edit', {'jeux': game.title| replace({' ': '_'})}) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Top 5 - News</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if getbestnews is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucun top news de crée pour le moment...</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Auteur</th>
+                                  <th>Vues</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for news in getbestnews %}
+                                  <tr>
+                                    <th>{{ news.title }}</th>
+                                    <th>{{ news.game.title }}</th>
+                                    <th>{{ news.author }}</th>
+                                    <th>{{ news.singularViewCount }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}" class="btn btn-primary btn-voir"><span class="glyphicon glyphicon-file"></span> Voir</a>
+                                      <a href="{{ path('tc_admin_writer_news_edit', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Top 5 - Articles</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if getbestarticles is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucun top article de crée pour le moment...</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Auteur</th>
+                                  <th>Vues</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for article in getbestarticles %}
+                                  <tr>
+                                    <th>{{ article.title }}</th>
+                                    <th>{{ article.game.title }}</th>
+                                    <th>{{ article.author }}</th>
+                                    <th>{{ article.singularViewCount }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_writer_articles_view', {'jeux': article.game.title| replace({' ': '_'}) ,'id': article.id }) }}" class="btn btn-primary btn-voir"><span class="glyphicon glyphicon-file"></span> Voir</a>
+                                      <a href="{{ path('tc_admin_writer_articles_edit', {'jeux': article.game.title| replace({' ': '_'}) ,'id': article.id }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Top 5 - Guides</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                        {% if getbestguides is empty %}
+                          <div class="conteneur123">  <p class="lead">Aucun top guide de crée pour le moment...</p> </div>
+                        {% else %}
+                          <div class="table-responsive">
+                            <table class="table table-striped">  
+                              <thead>
+                                <tr>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Auteur</th>
+                                  <th>Catégorie</th>
+                                  <th>Vues</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for guide in getbestguides %}
+                                  <tr>
+                                    <th>{{ guide.title }}</th>
+                                    <th>{{ guide.game.title }}</th>
+                                    <th>{{ guide.author }}</th>
+                                    <th>{{ guide.category.title }}</th>
+                                    <th>{{ guide.singularViewCount }}</th>
+                                    <th>
+                                      <a href="{{ path('tc_writer_guides_view', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}" class="btn btn-primary btn-voir"><span class="glyphicon glyphicon-file"></span> Voir</a>
+                                      <a href="{{ path('tc_admin_writer_guides_edit', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="footer_latest2 col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 col-lg-12">
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_admin_writer_list_jeux")}}'">Liste des jeux  <span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_admin_writer_list_guides")}}'">Liste des guides <span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_admin_writer_list_articles")}}'">Liste des articles  <span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_admin_writer_list_news")}}'">Liste des news  <span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+                <div class="contain_button col-md-12 col-lg-12">
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_admin_writer_dashboard")}}'">Administration du contenu  <span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block addon_script %}
+<script>
+$("#accordion").on("hidden.bs.collapse", function (e) {
+        $(e.target).closest(".header_primary")
+            .find(".heading_span span")
+            .removeClass("glyphicon glyphicon-menu-up")
+            .addClass("glyphicon glyphicon-menu-down");
+    });
+    $("#accordion").on("shown.bs.collapse", function (e) {
+        $(e.target).closest(".header_primary")
+            .find(".heading_span span")
+            .removeClass("glyphicon glyphicon-menu-down")
+            .addClass("glyphicon glyphicon-menu-up");
+    });
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(area, 'div_chart2') }}
+    </script>
+{% endblock %}

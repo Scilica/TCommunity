@@ -1,0 +1,4 @@
+services:
+#    tc_writer.example:
+#        class: TC\WriterBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

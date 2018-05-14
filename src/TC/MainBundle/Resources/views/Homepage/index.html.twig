@@ -1,0 +1,236 @@
+{% extends "TCMainBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Accueil {% endblock %}
+
+{% block body %}
+
+    <div class="row">
+       <div class="heading_carrousel hidden-xs col-md-12 col-lg-12">En ce moment</div>
+      <!-- CAROUSEL -->
+      <div class="row">
+        <div id="sliderjeux" class="carousel slide hidden-xs col-sm-12 col-md-12 col-lg-12" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            {% for game in bestGameslist %}  
+            <div class="item {% if loop.first %} active{%endif%}">
+              <img class="img-responsive border_maxsize_img" src="{{ game.coverUrl }}" alt="{{ game.coverAlt }}" />
+                <div class="carousel-caption d-none d-md-block caption_section">
+                  <button class="btn caption_button" onclick="window.location.href='{{ path('tc_writer_jeux_view', {'jeux': game.title| replace({' ': '_'})}) }}'">Fiche du jeu</button>
+                </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="sliders_indicators">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              {% for game in bestGameslist %}
+              <li data-target="#sliderjeux" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %} active{%endif%}">
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- FIN CAROUSEL -->
+    </div>
+
+    <div class="row">
+      <div class="heading_big_picture2 col-md-12 col-lg-12">Nos dernières news</div></div>
+    <div class="row">
+                    
+          <div class="list col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+            <!--DESKTOP VIEW -->
+            <div class="row">
+            <div class="row largest_div">
+              {% for news in listNews %}
+               <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ news.miniatureUrl }} " alt="{{ news.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'">
+              <h1>{{ news.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endfor %}
+            </div>
+
+            <!-- MOBILE VIEW -->
+            {% for news in listNews %}
+            <div class="mobile div col-xs-12">
+            <div class="col-xs-12">
+              <div class="row">
+                <img src=" {{ news.miniatureUrl }} " alt="{{ news.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_news_view', {'jeux': news.game.title| replace({' ': '_'}) ,'id': news.id }) }}'">
+              <h1>{{ news.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+            {% endfor %}
+            <!-- END MOBILE div  -->
+            
+             <div class="row">
+              <div class="footer_latest col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 col-lg-12">
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_writer_news_homepage")}}'">voir toutes nos news<span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+      
+
+            <!-- DESKTOP VIEW -->
+            <div class="row">
+      <div class="heading_big_picture2 col-md-12 col-lg-12">À ne pas manquer</div></div>
+            <div class="row">
+            <div class="row largest_div hidden-sm hidden-md hidden-xs">
+              {% for articles in listArticles %}
+              {% if loop.first %}
+              <div class="div col-xs-6 col-sm-12 col-md-12 col-lg-12 ">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+                    <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive divimg" />
+                  </div>
+                  <div class="col-sm-6 col-md-8 col-lg-6 unlock ">
+                    <h1>{{ articles.title }}</h1>
+                    <h2>{{ articles.game.title }}</h2>
+                    <p>{{ articles.content|striptags()|raw|nl2br() }}</p>
+                    <button class="btn gameindex_button" onclick="window.location.href='{{ path('tc_writer_jeux_view', {'jeux': articles.game.title| replace({' ': '_'})}) }}'">Fiche du jeu</button>
+                    <button class="btn read_button btn-color-articles" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">Lire la articles</button>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+                <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">
+              <h1>{{ articles.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+
+            <div class="row largest_div hidden-lg">
+              {% for articles in listArticles %}
+               <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">
+              <h1>{{ articles.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endfor %}
+            </div>
+
+            <!-- MOBILE div  -->
+            {% for articles in listArticles %}
+            <div class="mobile div col-xs-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ articles.miniatureUrl }} " alt="{{ articles.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_articles_view', {'jeux': articles.game.title| replace({' ': '_'}) ,'id': articles.id }) }}'">
+              <h1>{{ articles.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+            {% endfor %}
+            <!-- END MOBILE div  -->
+            <div class="row">
+              <div class="footer_latest col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 col-lg-12">
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_writer_articles_homepage")}}'">voir tous nos articles<span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            
+            
+            <div class="row">
+      <div class="heading_big_picture2 col-md-12 col-lg-12">On vous explique tout !</div></div>
+            <div class="row">
+            <div class="row largest_div hidden-xs hidden-sm hidden-md">
+              {% for guides in listGuides %}
+             {% if loop.first %}
+              <div class="div hidden-xs col-sm-12 col-md-12 col-lg-12 ">
+                <div class="row">
+                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-6">
+                    <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive divimg" />
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-8 col-lg-6 unlock">
+                    <h1>{{ guides.title }}</h1>
+                    <h2>{{ guides.game.title }}</h2>
+                    <h2>{{ guides.category.title }}</h2>
+                    <p>{{ guides.content|striptags()|raw|nl2br() }}</p>
+                    <button class="btn gameindex_button" onclick="window.location.href='{{ path('tc_writer_jeux_view', {'jeux': guides.game.title| replace({' ': '_'})}) }}'">Fiche du jeu</button>
+                    <button class="btn read_button" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">Lire la guides</button>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+                 <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">
+              <h1>{{ guides.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+</div>
+          <div class="row largest_div hidden-lg">
+              {% for guides in listGuides %}
+               <div class="div col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">
+              <h1>{{ guides.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+              {% endfor %}
+            </div>
+
+            <!-- MOBILE div  -->
+            {% for guides in listGuides %}
+            <div class="mobile div col-xs-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <img src=" {{ guides.miniatureUrl }} " alt="{{ guides.miniatureAlt }}" class="img-responsive dididov" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'" />
+            <div class="title" onclick="window.location.href='{{ path('tc_writer_guides_view', {'jeux': guides.game.title| replace({' ': '_'}) ,'category': guides.category.title| replace({' ': '_'}) ,'id': guides.id }) }}'">
+              <h1>{{ guides.title }}</h1>
+            </div>
+        </div>
+      </div>
+      </div>
+            {% endfor %}
+            <!-- END MOBILE div  -->
+            <div class="row">
+              <div class="footer_latest col-xs-12 col-lg-12">
+                <div class="contain_button col-md-12 col-lg-12">
+                   <button class="btn allofthem_button float_right" onclick="window.location.href='{{ path("tc_writer_guides_homepage")}}'">voir tous nos guides<span class="size_icon glyphicon glyphicon-menu-right"></span></button>
+                </div>
+              </div>
+            </div>
+        <!-- endtabs -->
+    </div>
+{% endblock %}

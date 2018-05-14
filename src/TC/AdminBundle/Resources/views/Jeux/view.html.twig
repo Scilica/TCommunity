@@ -1,0 +1,66 @@
+{% extends "TCMainBundle::layout_backoffice.html.twig" %}
+
+{% block body %}
+
+	<div class="panel-tool col-lg-3">
+		
+			
+				<div class="row">
+					<div class="heading_widget col-lg-12">Panel Tool</div>
+				</div>
+				<div class="row">
+					<div class="box_content">
+						<a href="{{ path('tc_admin_writer_jeux_edit', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+        				<a href="{{ path('tc_admin_writer_jeux_delete', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-trash"></span> Suppr</a>
+					</div>
+				</div>
+	
+			
+		
+		
+			
+				<div class="row">
+					<div class="heading_widget col-lg-12">News ({{ nbNews }})</div>
+				</div>
+				<div class="row">
+					<div class="box_content">
+						<a href="{{ path('tc_admin_writer_game_news_filtred', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Détail</a>
+						<a href="{{ path('tc_admin_writer_news_add', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Add</a>
+					</div>
+				</div>
+			
+		
+		
+			
+				<div class="row">
+					<div class="heading_widget col-lg-12">Articles ({{ nbArticles }})</div>
+				</div>
+				<div class="row">
+					<div class="box_content">
+						<a href="{{ path('tc_admin_writer_game_articles_filtred', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Détail</a>
+						<a href="{{ path('tc_admin_writer_articles_add', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Add</a>
+					</div>
+				</div>
+			
+		
+		
+			
+				<div class="row">
+					<div class="heading_widget col-lg-12">Guides ({{ nbGuides }})</div>
+				</div>
+				<div class="row">
+					<div class="box_content">
+						<a href="{{ path('tc_admin_writer_game_guides_filtred', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Détail</a>
+						<a href="{{ path('tc_admin_writer_guides_add', {'jeux': jeux| replace({' ': '_'})}) }}" class="btn btn-primary btn-detail"><span class="glyphicon glyphicon-th-list"></span> Add</a>
+					</div>
+				</div>
+			
+		
+	</div>
+
+
+
+
+
+
+{% endblock %}

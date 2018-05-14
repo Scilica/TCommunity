@@ -1,0 +1,132 @@
+tc_writer_news_homepage:
+    path:     /news={page}
+    defaults:  
+        _controller: TCWriterBundle:News:index 
+        page:     1
+    requirements:
+        page: \d*
+
+tc_writer_news_filtred:
+   path:    /news/tag/{tag}={page}
+   defaults:
+       _controller: TCWriterBundle:News:filtred
+       page: 1
+   requirements:
+       page: \d*
+       tag: \w+
+
+tc_writer_news_game_filtred:
+   path:    /news/jeux/{jeux}={page}
+   defaults:
+       _controller: TCWriterBundle:News:bygamefiltred
+       page: 1
+   requirements:
+       page: \d*
+       jeux: \w+
+
+tc_writer_news_view:
+   path:      /news/{jeux}/{id}
+   defaults: 
+        _controller: TCWriterBundle:News:view
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_writer_articles_homepage:
+    path:     /articles={page}
+    defaults:  
+        _controller: TCWriterBundle:Articles:index 
+        page:     1
+    requirements:
+        page: \d*
+
+tc_writer_articles_filtred:
+   path:    /articles/{tag}={page}
+   defaults:
+       _controller: TCWriterBundle:Articles:filtred
+       page: 1
+   requirements:
+       page: \d*
+       tag: \w+
+
+tc_writer_articles_game_filtred:
+   path:    /articles/jeux/{jeux}={page}
+   defaults:
+       _controller: TCWriterBundle:Articles:bygamefiltred
+       page: 1
+   requirements:
+       page: \d*
+       jeux: \w+
+
+tc_writer_articles_view:
+   path:      /articles/{jeux}/{id}
+   defaults: 
+        _controller: TCWriterBundle:Articles:view
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_writer_guides_homepage:
+    path:     /guides={page}
+    defaults:  
+        _controller: TCWriterBundle:Guides:index 
+        page:     1
+    requirements:
+        page: \d*
+
+tc_writer_guides_filtred:
+   path:    /guides/{tag}={page}
+   defaults:
+       _controller: TCWriterBundle:Guides:filtred
+       page: 1
+   requirements:
+       page: \d*
+       tag: \w+
+
+tc_writer_guides_game_filtred:
+   path:    /guides/jeux/{jeux}={page}
+   defaults:
+       _controller: TCWriterBundle:Guides:bygamefiltred
+       page: 1
+   requirements:
+       page: \d*
+       jeux: \w+
+
+tc_writer_guides_category:
+    path:    /guides/{jeux}/category
+    defaults:
+       _controller: TCWriterBundle:Guides:category
+    requirements:
+       jeux: \w+
+
+tc_writer_guides_category_filtred:
+   path:    /guides/{jeux}/category/{category}={page}
+   defaults:
+       _controller: TCWriterBundle:Guides:bycategoryfiltred
+       page: 1
+   requirements:
+       page: \d*
+       jeux: \w+
+
+tc_writer_guides_view:
+   path:      /guides/{jeux}/{category}/{id}
+   defaults: 
+        _controller: TCWriterBundle:Guides:view
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_writer_jeux_view:
+    path:     /jeux/{jeux}
+    defaults:
+        _controller: TCWriterBundle:Games:view
+    requirements:
+        jeux: \w+
+
+tc_writer_tag_view:
+    path: /tag/{tag}={page}
+    defaults:
+        _controller: TCWriterBundle:Tags:view
+        page:     1
+    requirements:
+        page: \d*

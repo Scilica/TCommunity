@@ -1,0 +1,15 @@
+{% extends "TCMainBundle::layout_backoffice.html.twig" %}
+
+{% block title %} {{ parent() }} - article {% endblock %}
+
+{% block body %}
+
+<h3> Formulaire d'ajout d'un article </h3>
+
+<div>
+	{{ form(form) }}
+</div>
+{% if app.request.get('_route') != app.request.headers.get('referer') %}   
+    <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
+{% endif %}
+{% endblock %}

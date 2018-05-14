@@ -1,0 +1,185 @@
+tc_admin_homepage:
+    path:     /dashboard
+    defaults: { _controller: TCAdminBundle:Admin:index }
+
+tc_admin_user:
+    path:     /dashboard/user
+    defaults: { _controller: TCAdminBundle:Admin:userindex }
+
+tc_admin_user_edit:
+    path:     /dashboard/user/{id}/edit
+    defaults: { _controller: TCUserBundle:User:edit }
+    requirements:
+       id:   \d+
+
+tc_admin_user_delete:
+    path:     /dashboard/user/{id}/delete
+    defaults: { _controller: TCUserBundle:User:delete }
+    requirements:
+       id:   \d+
+
+
+tc_admin_user_group_list:
+    path: /dashboard/user/groups/list
+    defaults: { _controller: TCAdminBundle:Admin:groupindex}
+
+tc_admin_user_group_add:
+    path: /dashboard/user/groups/add
+    defaults: { _controller: fos_user.group.controller:newAction}
+
+tc_admin_user_group_edit:
+    path: /dashboard/user/groups/{groupName}/edit
+    defaults: { _controller: fos_user.group.controller:editAction}
+
+tc_admin_user_group_delete:
+    path: /dashboard/user/groups/{groupName}/delete
+    defaults: { _controller: fos_user.group.controller:deleteAction}
+
+tc_admin_writer_dashboard:
+    path:    /dashboard/contenu
+    defaults: { _controller: TCAdminBundle:Admin:writerindex}
+
+tc_admin_writer_list_news:
+    path:    /dashboard/contenu/news/list-news
+    defaults: { _controller: TCAdminBundle:Admin:newsindex }
+
+tc_admin_writer_news_add:
+    path:    /dashboard/contenu/news/{jeux}/add
+    defaults:
+        _controller: TCWriterBundle:News:add
+    requirements:
+       jeux: \w+
+
+tc_admin_writer_news_edit:
+   path:      /dashboard/contenu/news/{jeux}/{id}/edit
+   defaults: 
+        _controller: TCWriterBundle:News:edit
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_admin_writer_news_delete:
+   path:      /dashboard/contenu/news/{jeux}/{id}/delete
+   defaults: 
+        _controller: TCWriterBundle:News:delete
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_admin_writer_list_articles:
+    path:    /dashboard/contenu/articles/list-articles
+    defaults: { _controller: TCAdminBundle:Admin:articlesindex }
+
+tc_admin_writer_articles_add:
+    path:    /dashboard/contenu/articles/{jeux}/add
+    defaults:
+        _controller: TCWriterBundle:Articles:add
+    requirements:
+       jeux: \w+
+
+tc_admin_writer_articles_edit:
+   path:      /dashboard/contenu/articles/{jeux}/{id}/edit
+   defaults: 
+        _controller: TCWriterBundle:Articles:edit
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_admin_writer_articles_delete:
+   path:      /dashboard/contenu/articles/{jeux}/{id}/delete
+   defaults: 
+        _controller: TCWriterBundle:Articles:delete
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_admin_writer_list_guides:
+    path:    /dashboard/contenu/guides/list-guides
+    defaults: { _controller: TCAdminBundle:Admin:guidesindex }
+
+tc_admin_writer_guides_add:
+    path:    /dashboard/contenu/guides/{jeux}/add
+    defaults:
+        _controller: TCWriterBundle:Guides:add
+    requirements:
+       jeux: \w+
+
+tc_admin_writer_guides_edit:
+   path:      /dashboard/contenu/guides/{jeux}/{category}/{id}/edit
+   defaults: 
+        _controller: TCWriterBundle:Guides:edit
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_admin_writer_guides_delete:
+   path:      /dashboard/contenu/guides/{jeux}/{category}/{id}/delete
+   defaults: 
+        _controller: TCWriterBundle:Guides:delete
+   requirements:
+       jeux: \w+
+       id:   \d+
+
+tc_admin_writer_list_jeux:
+    path:    /dashboard/contenu/jeux/list-jeux
+    defaults: { _controller: TCAdminBundle:Admin:jeuxindex }
+
+tc_admin_writer_jeux_view:
+    path:    /dashboard/contenu/jeux/{jeux}
+    defaults: { _controller: TCAdminBundle:Admin:jeuxview }
+
+tc_admin_writer_game_news_filtred:
+    path: /dashboard/contenu/jeux/news/{jeux}
+    defaults: { _controller: TCAdminBundle:Admin:newsfiltred}
+    requirements:
+        jeux: \w+
+
+tc_admin_writer_game_articles_filtred:
+    path: /dashboard/contenu/jeux/articles/{jeux}
+    defaults: { _controller: TCAdminBundle:Admin:articlesfiltred}
+    requirements:
+        jeux: \w+
+
+tc_admin_writer_game_guides_filtred:
+    path: /dashboard/contenu/jeux/guides/{jeux}
+    defaults: { _controller: TCAdminBundle:Admin:guidesfiltred}
+    requirements:
+        jeux: \w+
+
+tc_admin_writer_jeux_add:
+    path:    /dashboard/contenu/jeux/add/
+    defaults:
+        _controller: TCWriterBundle:Games:add
+
+tc_admin_writer_jeux_edit:
+    path:     /dashboard/contenu/jeux/{jeux}/edit
+    defaults:
+        _controller: TCWriterBundle:Games:edit
+    requirements:
+        jeux: \w+
+
+tc_admin_writer_jeux_delete:
+    path:     /dashboard/contenu/jeux/{jeux}/delete
+    defaults:
+        _controller: TCWriterBundle:Games:delete
+    requirements:
+        jeux: \w+
+
+tc_admin_writer_list_tags:
+    path:    /dashboard/contenu/tags/list-tags
+    defaults: { _controller: TCAdminBundle:Admin:tagsindex }
+
+tc_admin_writer_tag_add:
+    path: /dashboard/contenu/tags/add/
+    defaults:
+        _controller: TCWriterBundle:Tags:add
+
+tc_admin_writer_tag_edit:
+    path: /dashboard/contenu/tags/{tag}/edit
+    defaults:
+        _controller: TCWriterBundle:Tags:edit
+
+tc_admin_writer_tag_delete:
+    path: /dashboard/contenu/tags/{tag}/delete
+    defaults:
+        _controller: TCWriterBundle:Tags:delete

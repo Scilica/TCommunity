@@ -1,0 +1,112 @@
+{% extends "TCMainBundle::layout_backoffice.html.twig" %}
+
+{% block body %}
+
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <div class="header_primary">
+          <div class="row">
+            <div class="heading_span heading_big_picture2 col-md-12 col-lg-12" onclick="$("#accordion")" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Liste des tags<span class="size_icon glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
+          </div>
+          <div class="row">
+            <div id="collapseOne" class="collapse in" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <div class="col-lg-12 bobox">
+                  <div class="row">
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Base de données</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                          <div class="table-responsive">
+                            <table class="table table-striped">
+                              <div class="research_table col-lg-12">
+                                {{ form(form) }}
+                              </div>
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Titre</th>
+                                  <th>Aperçu</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for tag in pagination %}
+                                  <tr>
+                                    <th>{{ tag.id }}</th>
+                                    <th>{{ tag.title }}</th>
+                                    <th><span class="bdd_tag"><a class="btn tag_button {{ tag.color }}">{{ tag.title }}</a></span></th>
+                                    <th>
+                                      <a href="{{ path('tc_writer_tag_view', {'tag': tag.title| replace({' ': '_'})  }) }}" class="btn btn-primary btn-voir"><span class="glyphicon glyphicon-file"></span> Voir</a>
+                                      <a href="{{ path('tc_admin_writer_tag_edit', {'tag': tag.title| replace({' ': '_'})  }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                      <a data-toggle="modal" data-target="#{{ tag.id }}" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-trash"></span> Suppr</a>
+                                      <!-- MODAL -->
+                                        <div class="modal fade" id="{{ tag.id }}" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title" id="deleteunpublishednews">Avertissement</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Êtes-vous certain de vouloir supprimer ce tag :</br>
+                                                « {{ tag.title }} » ?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="button" class="btn btn-primary btn-danger" onclick="window.location.href='{{ path('tc_admin_writer_tag_delete',  {'tag': tag.title| replace({' ': '_'})  }) }}'"><span class="glyphicon glyphicon-trash"></span>  Supprimer</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <!-- END MODAL -->
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="research_table col-lg-12">
+                            Nombre de correspondance(s) en base de données: <span class="headingerspanbold">{{ pagination.getTotalItemCount }}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="footer_all">
+                            <div class="contain_button">
+                              {{ knp_pagination_render(pagination) }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+{% block addon_script %}
+<script>
+$("#accordion").on("hidden.bs.collapse", function (e) {
+        $(e.target).closest(".header_primary")
+            .find(".heading_span span")
+            .removeClass("glyphicon glyphicon-menu-up")
+            .addClass("glyphicon glyphicon-menu-down");
+    });
+    $("#accordion").on("shown.bs.collapse", function (e) {
+        $(e.target).closest(".header_primary")
+            .find(".heading_span span")
+            .removeClass("glyphicon glyphicon-menu-down")
+            .addClass("glyphicon glyphicon-menu-up");
+    });
+</script>
+{% endblock %}

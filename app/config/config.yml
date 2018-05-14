@@ -1,0 +1,187 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@TCMainBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+
+framework:
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
+    globals:
+        website: '%name_website%'
+        version: '%version%'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.project_dir%/var/data/data.sqlite"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+ivory_ck_editor:
+    input_sync: true
+    default_config:                     my_custom_config    # Utiliser par defaut la configuration my_custom_config
+    configs:
+        my_custom_config:
+            language:                   "fr"
+            toolbar: 
+             # Charger la toolbar tollbar_1 (voir plus bas)
+            filebrowserBrowseRoute:     "elfinder"
+            filebrowserBrowseRouteParameters:
+                instance: "ckeditor"
+            stylesSet:                  "my_styles"         # Chargement des styles personnalisables my_styles (voir plus bas)
+            uiColor:                    "#fCFCFC"           # Couleur de fond de l'interface
+            height:                     "800px"             # Hauteur par défaut
+            skin: "moono-lisa"
+            contentsCss:                ['css/main_design.css','css/bootstrap/css/bootstrap.css'] # Charge les styles dans l'éditeur (permet de voir en temps réel le résultat)
+    styles:         # Configuration des styles personnalisables
+        my_styles:
+           - { name: "Intro/Résumé", element: "div", attributes: { class: "intro_resume" }}
+           - { name: "Titre", element: "div", attributes: { class: "titre_section" }}
+
+fm_elfinder:
+    assets_path: gallery # Le dossier configuré dans composer.json
+    instances:
+        ckeditor:
+            locale:           "fr"
+            editor:           "ckeditor"
+            fullscreen:       false
+            include_assets:   true
+            connector:
+                debug:        false
+                roots:
+                    uploads:
+                        driver:           "LocalFileSystem"
+                        path:             "gallery/image"
+                        upload_allow:     ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'application/zip', 'audio/mpeg', 'text/csv', 'video/mp4', 'video/webm', 'application/pdf']
+                        upload_deny:      ['all']
+                        upload_max_size:  "8M"
+        form:
+            locale: "fr" # defaults to current request locale
+            editor: form # other choices are tinymce or simple, and form
+            fullscreen: false # defaults true, applies to simple and ckeditor editors
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: "gallery/image"
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 8M
+fos_user:
+    db_driver:    orm
+    firewall_name: main
+    user_class: TC\UserBundle\Entity\User
+    from_email:
+        address: "tearscommunity@email.com"
+        sender_name: "No reply"
+    registration:
+        form:
+            type: TC\UserBundle\Form\RegistrationFormType
+    profile:
+        form:
+            type: TC\UserBundle\Form\ProfileFormType
+    group:
+        group_class: TC\UserBundle\Entity\Groups
+        form:
+            type: TC\UserBundle\Form\GroupFormType
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        avatar:
+            uri_prefix: /avatar/
+            upload_destination: '%kernel.root_dir%/../web/avatar/'
+            namer: vich_uploader.namer_uniqid
+
+knp_paginator:
+    page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
+    default_options:                                 
+        page_name: page                 # page query parameter name
+        sort_field_name: sort           # sort field query parameter name
+        sort_direction_name: direction  # sort direction query parameter name
+        distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
+        filter_field_name: filterField  # filter field query parameter name
+        filter_value_name: filterValue  # filter value query paameter name
+    template:                                        
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
+
+fos_message:
+    db_driver: orm
+    thread_class: TC\UserBundle\Entity\Thread
+    message_class: TC\UserBundle\Entity\Message
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: TC\WriterBundle\Entity\Comment
+            thread: TC\WriterBundle\Entity\Thread
+
+cmen_google_charts:
+    language: "fr"
+
+google_analytics_api:
+    google_analytics_json_key: "%google_analytics_json_key%"
+
+cengizhan_views_counter:
+    use_query_builder: true

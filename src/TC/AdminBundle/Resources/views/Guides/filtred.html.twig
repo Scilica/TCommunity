@@ -1,0 +1,118 @@
+{% extends "TCMainBundle::layout_backoffice.html.twig" %}
+
+{% block body %}
+
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <div class="header_primary">
+          <div class="row">
+            <div class="heading_span heading_big_picture2 col-md-12 col-lg-12" onclick="$("#accordion")" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Liste des guides de {{ jeux }} <span class="size_icon glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
+          </div>
+          <div class="row">
+            <div id="collapseOne" class="collapse in" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <div class="col-lg-12 bobox">
+                  <div class="row">
+                    <div class="col-lg-12 noname">
+                      <div class="row">
+                        <div class="heading_widget col-lg-12">Base de données</div>
+                      </div>
+                      <div class="row bobox_content_div">
+                          <div class="table-responsive">
+                            <table class="table table-striped">
+                              <div class="research_table col-lg-12">
+                                {{ form(form) }}
+                              </div>
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Catégorie</th>
+                                  <th>Titre</th>
+                                  <th>Jeux</th>
+                                  <th>Auteur</th>
+                                  <th>Publié</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for guide in pagination %}
+                                  <tr>
+                                    <th>{{ guide.id }}</th>
+                                    <th>{{ guide.category.title }}</th>
+                                    <th>{{ guide.title }}</th>
+                                    <th>{{ guide.game.title }}</th>
+                                    <th>{{ guide.author }}</th>
+                                    <th>{% if guide.published == true%} <span class="published glyphicon glyphicon-ok"> {% else %} <span class="unpublished glyphicon glyphicon-remove"> {% endif %}</th>
+                                    <th>
+                                      <a href="{{ path('tc_writer_guides_view', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}" class="btn btn-primary btn-voir"><span class="glyphicon glyphicon-file"></span> Voir</a>
+                                      <a href="{{ path('tc_admin_writer_guides_edit', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}" class="btn btn-primary btn-edit"><span class="glyphicon glyphicon-edit"></span> Editer</a>
+                                      <a data-toggle="modal" data-target="#{{ guide.id }}" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-trash"></span> Suppr</a>
+                                      <!-- MODAL -->
+                                        <div class="modal fade" id="{{ guide.id }}" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title" id="deleteunpublishednews">Avertissement</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Êtes-vous certain de vouloir supprimer ce guide :</br>
+                                                « {{ guide.title }} » présent dans la catégorie «  {{ guide.category.title }} ?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="button" class="btn btn-primary btn-danger" onclick="window.location.href='{{ path('tc_admin_writer_guides_delete', {'jeux': guide.game.title| replace({' ': '_'}) ,'id': guide.id, 'category': guide.category.title| replace({' ': '_'}) }) }}'"><span class="glyphicon glyphicon-trash"></span>  Supprimer</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <!-- END MODAL -->
+                                    </th>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="research_table col-lg-12">
+                            Nombre de correspondance(s) en base de données: <span class="headingerspanbold">{{ pagination.getTotalItemCount }}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="footer_all">
+                            <div class="contain_button">
+                              {{ knp_pagination_render(pagination) }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+{% block addon_script %}
+<script>
+$("#accordion").on("hidden.bs.collapse", function (e) {
+        $(e.target).closest(".header_primary")
+            .find(".heading_span span")
+            .removeClass("glyphicon glyphicon-menu-up")
+            .addClass("glyphicon glyphicon-menu-down");
+    });
+    $("#accordion").on("shown.bs.collapse", function (e) {
+        $(e.target).closest(".header_primary")
+            .find(".heading_span span")
+            .removeClass("glyphicon glyphicon-menu-down")
+            .addClass("glyphicon glyphicon-menu-up");
+    });
+</script>
+{% endblock %}
